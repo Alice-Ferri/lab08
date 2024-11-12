@@ -1,14 +1,17 @@
 package it.unibo.mvc;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  * This class is a simple application that writes a random number on a file.
@@ -20,28 +23,39 @@ public class MiniGUI {
 
     private static final String TITLE = "A very simple GUI application";
     private static final int PROPORTION = 5;
-    private final Random randomGenerator = new Random();
-    private final JFrame frame = new JFrame(TITLE);
-
-    /**
-     * Creates a new {@link MiniGUI}.
-     */
-    public MiniGUI() {
-        final JPanel canvas = new JPanel();
-        canvas.setLayout(new BorderLayout());
-        final JButton write = new JButton("Print a random number on standard output");
-        canvas.add(write, BorderLayout.CENTER);
-        frame.setContentPane(canvas);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        /*
-         * Handlers
+        private final Random randomGenerator = new Random();
+        private final JFrame frame = new JFrame(TITLE);
+    
+        /**
+         * Creates a new {@link MiniGUI}.
          */
-        write.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                System.out.println(randomGenerator.nextInt());
-            }
-        });
+        public MiniGUI() {
+            final JPanel canvas = new JPanel();
+            canvas.setLayout(new BorderLayout());
+            final JButton write = new JButton("Print a random number on standard output");
+            canvas.add(write, BorderLayout.CENTER);
+            frame.setContentPane(canvas);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            /*
+             * Handlers
+             */
+            
+    
+            final JPanel myPanel = new JPanel();
+            myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.X_AXIS));
+            canvas.add(myPanel, BorderLayout.CENTER);
+            myPanel.add(write);
+            final JTextField result = new JTextField("RESULT: ");
+            canvas.add(result, BorderLayout.NORTH);
+            write.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(final ActionEvent e) {
+                    int n = randomGenerator.nextInt();
+                    result.setText("RESULT: " + String.valueOf(n));
+                    System.out.println("RESULT:" + n);
+                }
+            });
+
     }
 
     private void display() {
